@@ -28,6 +28,9 @@ export function getAuthCodeUrl(personal, account) {
     if (account) {
         authParams.append('login_hint', account);
     }
+    else {
+        authParams.append('prompt', 'select_account');
+    }
 
     const baseUrl = personal ? 'https://login.microsoftonline.com/consumers' : 'https://login.microsoftonline.com/common';
     const authUrl = `${baseUrl}/oauth2/v2.0/authorize?${authParams.toString()}`;
