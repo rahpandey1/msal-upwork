@@ -47,7 +47,7 @@ export async function saveUserAuthCode({ user, scope, code, type, personal }) {
         return result;
     }
     catch (e) {
-        console.log(`Failed to save user tokens: {e}`);
+        console.log(`Failed to save user tokens: ${e}`);
     }
 }
 
@@ -64,7 +64,7 @@ export async function saveUserFiles({ user, items }) {
         return result;
     }
     catch (e) {
-        console.log(`Failed to save user tokens: {e}`);
+        console.log(`Failed to save user tokens: ${e}`);
     }
 }
 

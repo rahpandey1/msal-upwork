@@ -5,10 +5,10 @@ export const personalUrl = 'https://onedrive.live.com/picker';
 export const apiScopes = ['https://graph.microsoft.com/.default', 'offline_access'];
 const clientId = '05e7bcc2-50c4-4f50-be24-67c0ea0304ed';
 
-export function getResourceScopes(resource) {
-    const tenantScopes = [`${combine(resource, '.default')}`, 'offline_access'];
+export function getResourceScopes(baseUrl) {
+    const tenantScopes = [combine(baseUrl, '.default'), 'offline_access'];
     const personalScopes = ['OneDrive.ReadOnly', 'offline_access'];
-    const useConsumerApp = resource.includes('onedrive.');
+    const useConsumerApp = baseUrl.includes('onedrive.');
     const scopes = useConsumerApp ? personalScopes : tenantScopes;
 
     return { scopes, useConsumerApp };
