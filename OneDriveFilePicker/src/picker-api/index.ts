@@ -2,7 +2,6 @@ import { _Picker } from "./picker";
 
 export { Popup, Close, CloseOnPick } from "./behaviors/popup-behaviors";
 export * from "./behaviors/setup";
-export * from "./behaviors/msal-authenticate";
 export { LamdaAuthenticate } from "./behaviors/lamda-authenticate";
 export * from "./behaviors/resolves";
 export { RejectOnErrors } from "./behaviors/errors";

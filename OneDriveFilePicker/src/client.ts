@@ -33,40 +33,6 @@ export async function request<T = any>(path: string, init?: RequestInit, token =
     }
 }
 
-export async function saveUserTokens(user, tokens) {
-    try {
-        const url = `msgraph/${encodeURIComponent(user)}/tokens`;
-        const result = await fetch(`${apiUrl}/${url}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(tokens)
-        });
-    }
-    catch (e) {
-        console.log(`Failed to save user tokens: {e}`);
-    }
-}
-
-export async function saveUserAuth({ user, endpoint, headers, body, scope, type }) {
-    try {
-        const userPath = user ? `${encodeURIComponent(user)}/` : '';
-        const url = `msgraph/${userPath}auth/${type}`;
-        const result = await fetch(`${apiUrl}/${url}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ endpoint, body, scope, headers })
-        });
-        return result;
-    }
-    catch (e) {
-        console.log(`Failed to save user tokens: {e}`);
-    }
-}
-
 export async function saveUserAuthCode({ user, scope, code, type, personal }) {
     try {
         const userPath = user ? `${encodeURIComponent(user)}/` : '';

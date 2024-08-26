@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 import PickerButton from './components/picker';
 import { AuthButton } from './components/authentication';
-import {IAuthenticateCommand, IFilePickerOptions} from "./picker-api";
-import PickedFilesList from './components/picked-files-list';
-import {fetchAuthTokens, saveUserFiles} from './client';
-import {CircularProgress} from "@mui/material";
+import { IAuthenticateCommand, IFilePickerOptions } from "./picker-api";
+import { fetchAuthTokens, saveUserFiles } from './client';
+import { CircularProgress } from "@mui/material";
 
 const paramsTest: IFilePickerOptions = {
   sdk: "8.0",
@@ -32,11 +31,8 @@ const paramsTest: IFilePickerOptions = {
 
 function App() {
 
-  const [results, setResults] = useState(null);
-
   async function onPicked(pickerResults) {
     if (pickerResults) {
-      setResults(pickerResults);
       setStatusText('Downloading files');
       const items = pickerResults.map(item => ({id: item.id, folder: !!item.folder}));
       await saveUserFiles({ user: currentUser, items });
@@ -63,11 +59,9 @@ function App() {
   }
 
   async function getCurrentUserToken(command: IAuthenticateCommand): Promise<string> {
-    const {ui_tokens, api_tokens} = currentUserTokens || {};
+    const { ui_tokens, api_tokens } = currentUserTokens || {};
     const token = (command.type === 'SharePoint' ? ui_tokens?.access_token : ui_tokens?.access_token) || '';
-    const token2 = null;//await getToken(command);
     console.log(`saved token type ${command.type}:`, token);
-    //console.log(`created token type ${command.type}:`, token2);
     return token;
   }
 
@@ -76,13 +70,6 @@ function App() {
   const [baseUrl, setBaseUrl] = useState(localStorage.getItem('currentSharepointUrl'));
   const [currentUserTokens, setCurrentUserTokens] = useState<any>();
   const [statusText, setStatusText] = useState('');
-
-  //const [msTenant, setMsTenant] = useState('inmartech');//inmartech
-  //const baseUrl = msTenant ? `https://${msTenant}-my.sharepoint.com/` : 'https://onedrive.live.com/picker';
-  //<input value={msTenant} onChange={e => setMsTenant(e.target.value)}/>
-  //<label>
-  //  <span style={{paddingRight: 10}}>Enter tenant name (leave empty for personal account):</span>
-  //</label>
 
   const personalUrl = baseUrl?.includes('live.com');
   const pickerPath = personalUrl ? '' : '_layouts/15/FilePicker.aspx';
@@ -105,8 +92,6 @@ function App() {
           {!!statusText && <div style={{paddingBottom: 10}}>{statusText}</div>}
           {(!!statusText || loading) && <CircularProgress />}
         </div>
-
-        {false && <PickedFilesList items={results}/>}
       </div>
   );
 }
