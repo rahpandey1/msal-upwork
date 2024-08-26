@@ -191,10 +191,11 @@ def refresh_tokens(access_token, refresh_token, scope):
         "client_id": client_id,
         "scope": scope,
         "refresh_token": refresh_token,
+        "client_secret": client_secret,
         "grant_type": "refresh_token"
     }
 
-    response = requests.post(token_url, data=data, headers={'Origin': primary_origin})
+    response = requests.post(token_url, data=data, headers={})
 
     if response.status_code == 200:
         tokens = response.json()
