@@ -53,8 +53,8 @@ function cleanPopup(popupWindow?: Window) {
     }
 }
 
-async function generateAuthCode(personalAccount, user) {
-    const authUrl = getAuthCodeUrl(personalAccount, user);
+async function generateAuthCode(personalAccount, user, scopes) {
+    const authUrl = getAuthCodeUrl(personalAccount, user, scopes);
     const popupWindow = window.open(authUrl, "PickerAuth", "popup,width=800,height=600");
     try {
         const responseString = await monitorPopupForHash(popupWindow);
@@ -70,7 +70,7 @@ export function AuthButton(props: AuthProps) {
     const { personalAccount, setCurrentUser, setBaseUrl, setLoading } = props;
 
     async function Authenticate() {
-        const apiCode = await generateAuthCode(personalAccount, undefined);
+        const apiCode = await generateAuthCode(personalAccount, undefined, apiScopes);
         console.log(apiCode);
 
         setLoading(true);
@@ -82,9 +82,9 @@ export function AuthButton(props: AuthProps) {
             console.log(`generated api token for user ${user}:`, apiToken);
 
             const baseUrl = (apiToken && !personalAccount) ? await getBaseUrl(apiToken) : personalUrl;
-            const uiCode = await generateAuthCode(personalAccount, user);
-
             const { scopes, useConsumerApp } = getResourceScopes(baseUrl);
+            const uiCode = await generateAuthCode(personalAccount, user, scopes);
+
             const uiResponse = await saveUserAuthCode({ user, code: uiCode, scope: scopes.join(' '), type: 'ui', personal: useConsumerApp });
 
             const uiResponseBody = await uiResponse.json();

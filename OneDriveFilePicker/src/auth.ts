@@ -14,15 +14,13 @@ export function getResourceScopes(baseUrl) {
     return { scopes, useConsumerApp };
 }
 
-export function getAuthCodeUrl(personal, account) {
-    const apiScopes = ["https://graph.microsoft.com/.default"];
-
+export function getAuthCodeUrl(personal, account, scopes) {
     const authParams = new URLSearchParams({
         client_id: clientId,
         response_type: 'code',
         redirect_uri: 'http://localhost:3000/web',
         response_mode: 'query',
-        scope: apiScopes.join(' '),
+        scope: scopes.join(' '),
         state: '12345'
     });
     if (account) {
